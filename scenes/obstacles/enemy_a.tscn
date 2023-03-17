@@ -1,0 +1,55 @@
+[gd_scene load_steps=8 format=3 uid="uid://vrc4541lkk6q"]
+
+[ext_resource type="Script" path="res://scripts/Enemy.gd" id="1_eapaw"]
+[ext_resource type="Texture2D" uid="uid://b0hw6m7govphj" path="res://assets/monochrome_tilemap_transparent_packed.png" id="2_p7byn"]
+[ext_resource type="PackedScene" uid="uid://b5sgaktdkjxgx" path="res://scenes/obstacles/dead_zone.tscn" id="3_s83k2"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g4l83"]
+radius = 4.279
+height = 10.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0qm21"]
+atlas = ExtResource("2_p7byn")
+region = Rect2(16, 256, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4odbm"]
+atlas = ExtResource("2_p7byn")
+region = Rect2(32, 256, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_giq8c"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0qm21")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4odbm")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 8.0
+}]
+
+[node name="EnemyA" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_eapaw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 3.721)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_g4l83")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_giq8c")
+animation = &"walk"
+frame_progress = 0.155027
+metadata/_edit_lock_ = true
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2(0, 7)
+target_position = Vector2(0, 4)
+collision_mask = 2
+
+[node name="DeadZone" parent="." instance=ExtResource("3_s83k2")]
+position = Vector2(0, 2)

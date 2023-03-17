@@ -1,0 +1,109 @@
+[gd_scene load_steps=13 format=3 uid="uid://ds0h8yyn5si6p"]
+
+[ext_resource type="Script" path="res://scripts/Player.gd" id="1_cs6b6"]
+[ext_resource type="Texture2D" uid="uid://b0hw6m7govphj" path="res://assets/monochrome_tilemap_transparent_packed.png" id="2_eupjv"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iu3qs"]
+atlas = ExtResource("2_eupjv")
+region = Rect2(80, 192, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qptsi"]
+atlas = ExtResource("2_eupjv")
+region = Rect2(64, 192, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_af6hc"]
+atlas = ExtResource("2_eupjv")
+region = Rect2(0, 192, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u7si7"]
+atlas = ExtResource("2_eupjv")
+region = Rect2(64, 192, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ipn7h"]
+atlas = ExtResource("2_eupjv")
+region = Rect2(16, 192, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_17glg"]
+atlas = ExtResource("2_eupjv")
+region = Rect2(32, 192, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0sc0k"]
+atlas = ExtResource("2_eupjv")
+region = Rect2(48, 192, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_iwrnj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iu3qs")
+}],
+"loop": true,
+"name": &"climb",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qptsi")
+}],
+"loop": true,
+"name": &"fall",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_af6hc")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u7si7")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ipn7h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_17glg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0sc0k")
+}],
+"loop": true,
+"name": &"run",
+"speed": 8.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tvd0m"]
+radius = 5.0
+height = 12.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ihvbn"]
+size = Vector2(8, 10)
+
+[node name="Player" type="CharacterBody2D"]
+collision_mask = 14
+script = ExtResource("1_cs6b6")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_iwrnj")
+animation = &"run"
+frame_progress = 0.880724
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("CapsuleShape2D_tvd0m")
+
+[node name="LadderDetector" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LadderDetector"]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_ihvbn")
